@@ -22,14 +22,16 @@ export default function User() {
     { name: "amount", thai: "จำนวนเงิน(บาท)", position: "right" },
   ]
   useEffect( async ()=>{
-      if(router.isReady && router.query.userName && router.query.userName[0]){
+    if(router.isReady) {
+      const tempAllUser = await getAllUsers()
+      setAllUser(tempAllUser)
+      if(router.query.userName && router.query.userName[0]){
         setUserName(router.query.userName[0])
       } else {
-        const tempAllUser = await getAllUsers()
-        setAllUser(tempAllUser)
         changeUser(tempAllUser[0])
       }
-  },[router.isReady])
+    }
+  },[router.isReady, router.asPath])
 
   useEffect( async () => {
     if(userName){
